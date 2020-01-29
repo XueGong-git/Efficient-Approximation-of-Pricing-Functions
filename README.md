@@ -1,2 +1,2 @@
-# Taster-Project-2-Xue
-Repository for MAC-MIGS Taster Project 2
+# Taster-Project-2
+Repository for MAC-MIGS Taster Project 2 - Efficient Approximation of pricing functions

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from GPreg import reg
 from GPtrain import train
 from GPsparsetrain import sparsetrain
-from GPsparsetrain2 import sparsetrain2
+from GPsparsetraindraft import sparsetraindraft
 import time
 import numpy.linalg as linalg
 
@@ -30,7 +30,7 @@ N_test = 100
 ## Generate range, ns, of numbers of training points per dimension, Nd.
 
 #oneD_max = 5000
-nInc = 5
+nInc = 8
 #mD_inc = np.ceil(np.power(oneD_max, 1 / D) / nInc)
 #ns = np.arange(mD_inc, (nInc + 1) * mD_inc, mD_inc)
 #ns = np.geomspace(3, np.power(oneD_max, 1 / D), nInc, endpoint = True) # log spaced values for Nd from 3 to max affordable
@@ -53,7 +53,7 @@ MaxError = np.zeros(nInc)
 for p in range(nInc):
     ## Generate training points.
     Nd = int(ns[p])
-    X_train, Y_train, N_train = sparsetrain2(D, func, Nd, bounds)
+    X_train, Y_train, N_train = sparsetrain(D, func, Nd, bounds)
     #X_train, Y_train, N_train = train(D, func, Nd, bounds)
     
     ## Compute errors for a range of numbers of training points.

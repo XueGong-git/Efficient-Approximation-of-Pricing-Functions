@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.linalg as linalg
 
-def sparsetrain2(D, func, Nd, bounds):
+def sparsetrain(D, func, Nd, bounds):
     L = int(np.log2(Nd))
     
     for i in range(0, L + 1):

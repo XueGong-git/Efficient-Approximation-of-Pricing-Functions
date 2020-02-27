@@ -52,7 +52,7 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0):
         if l == 0:
             dWf = math.sqrt(hf)*randn(N2)
             t = t + hf
-            lnrf= lnrf + alpha*(math.log(Mu(t))-lnrf)*hf + sigma*dWf
+            lnrf= lnrf + alpha*(math.log(Mu(t,mu))-lnrf)*hf + sigma*dWf
             rf = np.exp(lnrf)
             integralf = integralf + rf*hf
         else:
@@ -62,10 +62,10 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0):
                     dWf = math.sqrt(hf)*randn(N2)
                     t = t + hf
                     dWc = dWc + dWf
-                    lnrf  = lnrf + alpha*(math.log(Mu(t))-lnrf)*hf + sigma*dWf
+                    lnrf  = lnrf + alpha*(math.log(Mu(t,mu))-lnrf)*hf + sigma*dWf
                     rf = np.exp(lnrf)
                     integralf = integralf + rf*hf
-                lnrc = lnrc + alpha*(math.log(Mu(t))-lnrc)*hc + sigma*dWf
+                lnrc = lnrc + alpha*(math.log(Mu(t,mu))-lnrc)*hc + sigma*dWf
                 rc = np.exp(lnrc)
                 integralc = integralc + rc*hc
         Pf = np.exp(-integralf) #price estimation using fine grid

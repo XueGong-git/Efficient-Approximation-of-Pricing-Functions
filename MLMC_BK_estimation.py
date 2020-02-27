@@ -5,15 +5,12 @@ Created on Wed Feb 26 17:43:28 2020
 
 @author: s1998345
 """
-
+import time
 
 import numpy as np
 from random import seed
 from numpy.random import randn
 import math
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
-import pylab 
 from scipy.special import legendre
 # set the state of randn
 seed(1)
@@ -26,7 +23,6 @@ def Mu(t,mu):
     for i in range(len(mu)):
         leg = legendre(i)
         value = value + mu[i]*leg(t)
-        print(value)
     return value
 
 
@@ -81,7 +77,8 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0):
     
     
 def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
-    
+    start_time = time.time()
+
     L   = -1
     N   = 10000
     converged = 0
@@ -139,5 +136,8 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
         P = P + ( suml[1,L]/suml[0,L] ) / (M-1)
     
     mlmc_cost = (1+1/M)*sum(Nl*M**np.arange(L+1))
+    print("---MLMC runtime %s seconds ---" % (time.time() - start_time))
 
     return(P, Nl, mlmc_cost, con)
+
+test = mlmc(M=4,eps=0.01,extrap=0, alpha=0.1, mu=[10,9,8,7,6,5,4,3,2,1], T=1, sigma=0.1, r0=1)

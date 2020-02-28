@@ -6,24 +6,19 @@ Created on Wed Feb 26 17:43:28 2020
 @author: s1998345
 """
 import time
-
+from scipy.interpolate import CubicSpline
 import numpy as np
 from random import seed
 from numpy.random import randn
 import math
-from scipy.special import legendre
 # set the state of randn
 seed(1)
-mu = [1,2,3,4,5,6,7,8,9,10]
+
 
 #evaluate legendre function for x
-
-def Mu(t,mu):
-    value = 0
-    for i in range(len(mu)):
-        leg = legendre(i)
-        value = value + mu[i]*leg(t)
-    return value
+def Mu(t,T,mu):
+    cs = CubicSpline([0,0.5*T,T],mu)
+    return cs(t)
 
 
 #  mlmc_l = function for level l estimator 
@@ -48,7 +43,7 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0):
         if l == 0:
             dWf = math.sqrt(hf)*randn(N2)
             t = t + hf
-            lnrf= lnrf + alpha*(math.log(Mu(t,mu))-lnrf)*hf + sigma*dWf
+            lnrf= lnrf + alpha*(math.log(Mu(t,T,mu))-lnrf)*hf + sigma*dWf
             rf = np.exp(lnrf)
             integralf = integralf + rf*hf
         else:
@@ -58,10 +53,10 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0):
                     dWf = math.sqrt(hf)*randn(N2)
                     t = t + hf
                     dWc = dWc + dWf
-                    lnrf  = lnrf + alpha*(math.log(Mu(t,mu))-lnrf)*hf + sigma*dWf
+                    lnrf  = lnrf + alpha*(math.log(Mu(t,T, mu))-lnrf)*hf + sigma*dWf
                     rf = np.exp(lnrf)
                     integralf = integralf + rf*hf
-                lnrc = lnrc + alpha*(math.log(Mu(t,mu))-lnrc)*hc + sigma*dWf
+                lnrc = lnrc + alpha*(math.log(Mu(t,T, mu))-lnrc)*hc + sigma*dWc
                 rc = np.exp(lnrc)
                 integralc = integralc + rc*hc
         Pf = np.exp(-integralf) #price estimation using fine grid
@@ -140,4 +135,4 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
 
     return(P, Nl, mlmc_cost, con)
 
-test = mlmc(M=4,eps=0.01,extrap=0, alpha=0.1, mu=[10,9,8,7,6,5,4,3,2,1], T=1, sigma=0.1, r0=1)
+test = mlmc(M=4,eps=0.01,extrap=0, alpha=0.1, mu=[10,9,8], T=1, sigma=0.1, r0=1)

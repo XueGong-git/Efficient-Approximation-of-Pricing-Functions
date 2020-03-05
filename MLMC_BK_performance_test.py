@@ -52,20 +52,20 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0):
         t=0
         if l == 0:
             dWf = math.sqrt(hf)*randn(N2)
-            t = t + hf
             lnrf= lnrf + alpha*(math.log(Mu(t,T,mu))-lnrf)*hf + sigma*dWf
             rf = np.exp(lnrf)
             integralf = integralf + rf*hf
+            t = t + hf
         else:
             for n in range(int(nc)): #coarse grid
                 dWc = np.zeros(N2)
                 for m in range(M): #fine grid
                     dWf = math.sqrt(hf)*randn(N2)
-                    t = t + hf
                     dWc = dWc + dWf
                     lnrf  = lnrf + alpha*(math.log(Mu(t,T, mu))-lnrf)*hf + sigma*dWf
                     rf = np.exp(lnrf)
                     integralf = integralf + rf*hf
+                    t = t + hf
                 lnrc = lnrc + alpha*(math.log(Mu(t,T, mu))-lnrc)*hc + sigma*dWc
                 rc = np.exp(lnrc)
                 integralc = integralc + rc*hc
@@ -160,23 +160,43 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
 test1 = mlmc(M=4,eps=0.0001,extrap=1, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
 #test2 = mc(M=4,eps=0.0001, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
 
-maxl = 5
+
+
+M=4
+N=2000000
+alpha=5
+mu=[0.02,0.03,0.04]
+T=5
+sigma=0.5
+r0=0.03
+
+
+###calculate variance Pf nd Pf-Pc
+maxl = 6
 del1 = np.zeros(maxl)
 del2 = np.zeros(maxl)
 var1 = np.zeros(maxl)
 var2 = np.zeros(maxl)
-N = 10000
+N = 2000000
 L = np.arange(maxl)
 for l in L:
     print(l)
-    sums = mlmc_l(M=4,l=l,N=N, alpha=5, mu=[0.3,0.4,0.5], T=1, sigma=5, r0=0.3)
-    del1[l] = sums[2]/N
-    del2[l]  = sums[0]/N
-    var1[l]  = sums[3]/N-(sums[2]/N)**2 #Var[Pl]
-    var2[l]  = sums[1]/N-(sums[0]/N)**2 #Var[Pl - P(l-1)]
+    sums = mlmc_l(M=M,l=l,N=N, alpha=alpha, mu=mu, T=T, sigma=sigma, r0=r0)
+    del1[l] = sums[2]/N #Pf
+    del2[l]  = sums[0]/N #Pf-Pc
+    var1[l]  = sums[3]/N-(sums[2]/N)**2 #Var[Pf]
+    var2[l]  = sums[1]/N-(sums[0]/N)**2 #Var[Pf - Pc]
   
+    
+line1= pylab.plot(L, var1, label = 'Var(P)')
+line2= pylab.plot(L, var2, label = 'Var(Pl-Pl-1)')
+pylab.legend()
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'VarPl vs l.png')
+
+
+
 #plot 3 Nl
-Eps = [ 0.01, 0.005, 0.002, 0.001, 0.0005]
+Eps = [ 0.1, 0.01, 0.005, 0.0005, 0.0002, 0.0001]
 mlmc_cost = np.zeros((len(Eps),2))
 std_cost = np.zeros((len(Eps),2))
 
@@ -184,9 +204,10 @@ M=4
 for extrap in range(1):
     for i in range(len(Eps)):
         eps = Eps[i]
-        mlmctest = mlmc(M=4,eps=eps,extrap=1, alpha=5, mu=[0.3,0.4,0.5], T=1, sigma=5, r0=0.3)
+        mlmctest = mlmc(M=M,eps=eps,extrap=1, alpha=alpha, mu=mu, T=T, sigma=sigma, r0=r0)
         Nl = mlmctest[1]
         l = len(Nl)-1
+        print(l)
         mlmc_cost[i,extrap] = (1+1/M)*np.sum(Nl*M**np.arange(l+1))
         Nmc = 2*var1[0:l+1]/eps**2
         print(eps)
@@ -195,6 +216,7 @@ for extrap in range(1):
         std_cost[i,extrap] = np.sum((2*var1[0:l+1]/eps**2)*M**np.arange(l+1))
 print(mlmc_cost)
 print(std_cost)
+
 
 
 #plot complexity
@@ -212,21 +234,22 @@ plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functio
 
 
 #plot 1 logM variance#
-line1 = plt.plot(L,np.log(var1)/np.log(M), label = 'P_l')
-line2 = plt.plot(L[1:],np.log(var2[1:])/np.log(M), label = 'P_l- P_{l-1}')
-line3 = plt.plot(L,-2.5*L-6, label = '-2.5l')
+line1 = pylab.plot(L,np.log(var1)/np.log(M), label = 'P_l')
+line2 = pylab.plot(L[1:],np.log(var2[1:])/np.log(M), label = 'P_l- P_{l-1}')
+line3 = pylab.plot(L,-2.5*L-6, label = '-2.5l')
 
-plt.xlabel('l')
-plt.ylabel('log_M variance'); #title(stitle)
-plt.legend()
-plt.plot()
+pylab.xlabel('l')
+pylab.ylabel('log_M variance'); #title(stitle)
+pylab.legend()
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'MLMC_P_variance.png')
 
 
 #plot 2 logm mean
-line1 = plt.plot(L,np.log(abs(del1))/np.log(M), label = 'P_l')
-line2 = plt.plot(L[1:],np.log(abs(del2[1:]))/np.log(M), label = 'P_l- P_{l-1}')
-line3 = plt.plot(L[2:],np.log(abs(del2[2:]-del2[1:(maxl-1)]/M))/np.log(M), label = 'Y_l-Y_{l-1}/M')
-line4 = plt.plot(L,-1.5*L-4, label = '-1.5l')
-plt.xlabel('l')
-plt.ylabel('log_M |mean|'); 
-plt.legend()
+line1 = pylab.plot(L,np.log(abs(del1))/np.log(M), label = 'P_l')
+line2 = pylab.plot(L[1:],np.log(abs(del2[1:]))/np.log(M), label = 'P_l- P_{l-1}')
+line3 = pylab.plot(L[2:],np.log(abs(del2[2:]-del2[1:(maxl-1)]/M))/np.log(M), label = 'Y_l-Y_{l-1}/M')
+line4 = pylab.plot(L,-1.5*L-4, label = '-1.5l')
+pylab.xlabel('l')
+pylab.ylabel('log_M |mean|'); 
+pylab.legend()
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'MLMC_P_mean.png')

@@ -107,6 +107,7 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
     suml=np.zeros((5,100))
     while converged == 0:
         L = L+1
+        print(L)
         sums = mlmc_l(M,L,N, alpha, mu, T, sigma, r0)
         suml[0,L] = N
         suml[1,L] = sums[0] #sum(Pf-Pc) at level L
@@ -121,7 +122,6 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
         # update sample sums
     
         for l in (np.arange(L-L0)+L0+1):
-            print(l)
             if L == 0  :
                 dNl = Nl-suml[0,l]
             else:

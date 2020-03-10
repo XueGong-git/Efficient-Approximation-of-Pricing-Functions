@@ -13,14 +13,12 @@ Created on Wed Feb 26 17:43:28 2020
 
 @author: s1998345
 """
-import pylab 
 import time
 from scipy.interpolate import CubicSpline
 import numpy as np
 from random import seed
 from numpy.random import randn
 import math
-import matplotlib.pyplot as plt
 # set the state of randn
 seed(1)
 
@@ -159,5 +157,5 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
     return(P, Nl, cost)
 
 
-test1 = mlmc(M=4,eps=0.0001,extrap=1, alpha=0.9, mu=[0.01,0.25,0.05], T=5, sigma=0.9, r0=0.01)
+test1 = mlmc(M=4,eps=0.00005,extrap=1, alpha=0.9, mu=[0.01,0.025,0.05], T=5, sigma=0.9, r0=0.01)
 #test2 = mc(M=4,eps=0.0001, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)

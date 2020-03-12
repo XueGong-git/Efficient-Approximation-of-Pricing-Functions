@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Mar  4 12:41:16 2020
-
 @author: s1998345
 """
 
@@ -10,7 +9,6 @@ Created on Wed Mar  4 12:41:16 2020
 # -*- coding: utf-8 -*-
 """
 Created on Wed Feb 26 17:43:28 2020
-
 @author: s1998345
 """
 import pylab 
@@ -157,7 +155,7 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0):
     return(P, Nl, cost)
 
 
-test1 = mlmc(M=4,eps=0.0001,extrap=1, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
+#test1 = mlmc(M=4,eps=0.0001,extrap=1, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
 #test2 = mc(M=4,eps=0.0001, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
 
 
@@ -177,7 +175,7 @@ del1 = np.zeros(maxl)
 del2 = np.zeros(maxl)
 var1 = np.zeros(maxl)
 var2 = np.zeros(maxl)
-N = 2000000
+N = 1000000
 L = np.arange(maxl)
 for l in L:
     print(l)
@@ -188,10 +186,12 @@ for l in L:
     var2[l]  = sums[1]/N-(sums[0]/N)**2 #Var[Pf - Pc]
   
     
-line1= pylab.plot(L, var1, label = 'Var(P)')
-line2= pylab.plot(L, var2, label = 'Var(Pl-Pl-1)')
+line1= pylab.semilogy(L, var1, label = 'P')
+line2= pylab.semilogy(L, var2, label = 'Pl-Pl-1')
+pylab.xlabel('l')
+pylab.ylabel('Variance'); #title(stitle)
 pylab.legend()
-plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'VarPl vs l.png')
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/MLMC plot/'+'VarPl vs l.png')
 
 
 
@@ -229,7 +229,7 @@ line2= pylab.loglog(Eps,std_cost[:,0]*eps2, label = 'MC')
 pylab.xlabel('eps')
 pylab.ylabel('eps2*Cost'); #title(stitle)
 pylab.legend()
-plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'MLMC_P_cost.png')
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/MLMC plot/'+'MLMC_P_cost.png')
 
 
 
@@ -241,7 +241,7 @@ line3 = pylab.plot(L,-2.5*L-6, label = '-2.5l')
 pylab.xlabel('l')
 pylab.ylabel('log_M variance'); #title(stitle)
 pylab.legend()
-plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'MLMC_P_variance.png')
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/MLMC plot/'+'MLMC_P_variance.png')
 
 
 #plot 2 logm mean
@@ -252,4 +252,4 @@ line4 = pylab.plot(L,-1.5*L-4, label = '-1.5l')
 pylab.xlabel('l')
 pylab.ylabel('log_M |mean|'); 
 pylab.legend()
-plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/'+'MLMC_P_mean.png')
+plt.savefig('/home/s1998345/Documents/Efficient-Approximation-of-Pricing-Functions/MLMC plot/'+'MLMC_P_mean.png')

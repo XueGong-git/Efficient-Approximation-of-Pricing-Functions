@@ -1,6 +1,7 @@
 This folder contains all the code necessary to implement GP regression for the pricing function, P. To run the code: download
 all files to the same folder, change line 18 of GPfromData2.py to have the correct filepath to run GPonline.py, then run
-GPfromData2.py.
+GPfromData2.py. The .npy files in this folder are training data corresponding to the data given in Table 3.1 in:
+https://www.overleaf.com/read/yqghysfrsqnq.
 
 Note: this implementation makes use of the file pysg.py (which generates sparse grids), created by Jochan Garcke, which is freely available and can be found
 at https://github.com/jgarcke/sparse-grid-py.

@@ -1,0 +1,3 @@
+This folder contains all the code necessary to implement GP regression for the pricing function, P. To run the code: download
+all files to the same folder, change line 18 of GPfromData2.py to have the correct filepath to run GPonline.py, then run
+GPfromData.py.

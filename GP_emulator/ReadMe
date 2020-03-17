@@ -2,5 +2,5 @@ This folder contains all the code necessary to implement GP regression for the p
 all files to the same folder, change line 18 of GPfromData2.py to have the correct filepath to run GPonline.py, then run
 GPfromData2.py.
 
-Note: this implementation makes use of the file pysg.py created by Jochan Garcke, which is freely available and can be found
+Note: this implementation makes use of the file pysg.py (which generates sparse grids), created by Jochan Garcke, which is freely available and can be found
 at https://github.com/jgarcke/sparse-grid-py.

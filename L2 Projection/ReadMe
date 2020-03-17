@@ -1,0 +1,5 @@
+This folder contains all the code used to construct a surrogate model for the pricing function using L2 random projection. 
+All code used to perform the L2 projection is in the file L2_projection.py. The total_product.py file contains the necessary
+code to construct polynomial bases using total degree and total product index sets. The construction and analysis of surrogate
+models for the pricing problem is presented in pricing_L2.py, which uses the code from the files above, and that within 
+mlmc_pricing.py - which uses MLMC methods to generate training data.

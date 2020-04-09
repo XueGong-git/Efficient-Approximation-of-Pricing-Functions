@@ -2,6 +2,6 @@
 Repository for MAC-MIGS Taster Project 2 - Efficient Approximation of pricing functions
 
 Three folders correspond to codes used in three chapters in the report:
-- Multilevel Monte Carlo
-- Guassion process regression
-- L2 projection
+Chapter2 - Multilevel Monte Carlo
+Chapter3 - Guassion process regression
+Chapter4 - L2 projection

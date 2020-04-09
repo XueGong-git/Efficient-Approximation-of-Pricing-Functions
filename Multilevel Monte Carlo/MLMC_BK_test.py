@@ -201,15 +201,12 @@ for extrap in range(1):
         
 #plot complexity vs. eps
 eps2=np.multiply(Eps,Eps)
-print(mlmc_cost[:, 0]*eps2)
-print(std_cost[:, 0]*eps2)
-line1= pylab.loglog(Eps,mlmc_cost[:, 0], label = 'MLMC')
-line2= pylab.loglog(Eps,std_cost[:,0], label = 'MC')
-#line3 = plt.loglog(Eps,mlmc_cost[:, 0], label = 'MLMC')
+line1= pylab.loglog(Eps,mlmc_cost[:, 0]*eps2, 'k*--', label = 'MLMC')
+line2= pylab.loglog(Eps,std_cost[:,0]*eps2, 'b*-', label = 'MC')
+line3 = plt.loglog(Eps,mlmc_cost[:, 0]*eps2, label = 'MLMC')
 pylab.xlabel('eps')
-pylab.ylabel('Cost'); #title(stitle)
+pylab.ylabel('eps2*Cost'); #title(stitle)
 pylab.legend()
-
 
 # plot variance vs. level l
 line1 = pylab.plot(L[1:]+2,np.log(var1[1:])/np.log(M), 'k*--', label = '$\hat{P}_l$')

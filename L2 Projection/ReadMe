@@ -1,5 +1,10 @@
-This folder contains all the code used to construct a surrogate model for the pricing function using L2 random projection. 
-All code used to perform the L2 projection is in the file L2_projection.py. The total_product.py file contains the necessary
-code to construct polynomial bases using total degree and total product index sets. The construction and analysis of surrogate
-models for the pricing problem is presented in pricing_L2.py, which uses the code from the files above, and that within 
-mlmc_pricing.py - which uses MLMC methods to generate training data.
+This folder contains all the code used to construct a surrogate model for the pricing function using L2 random projection: 
+
+- All code used to perform the L2 projection is in the file L2_projection.py. 
+- The total_product.py file contains the necessary code to construct polynomial bases using total degree and total product 
+  index sets. 
+- The implementation of MLMC methods to generate training data is provided in mlmc_pricing.py 
+
+All of the files above are called within pricing_L2.py, which constructs and analyses surrogate models for the pricing problem
+using L2 projection. In particular, this file produces the output seen in Table 4.1 and Figure 4.2 & 4.3 of the report. As
+remarked in the report, it can take several hours for this file to generate the 12000 training points used to fit the model.

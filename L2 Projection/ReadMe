@@ -7,5 +7,8 @@ This folder contains all the code used to construct a surrogate model for the pr
 
 All of the files above are called within pricing_L2.py, which constructs and analyses surrogate models for the pricing problem
 using L2 projection. In particular, this file produces the output seen in Table 4.1 and Figure 4.2 & 4.3 of the report. As
-remarked in the report, it can take several hours for this file to generate the 12000 training points used to fit the model.
+remarked in the report, it can take several hours for this file to generate the 12000 training points used to fit the model. 
+To save time, the training data (X, prices) can be downloaded and imported into python from X.npy, prices.npy respectively. 
+Similarly, the test data can be downloaded from X_test.npy, prices_test.npy. The generation of training and test data can then 
+be omitted from pricing_L2.py.
 NOTE: All files must be downloaded and stored in the same folder to work.

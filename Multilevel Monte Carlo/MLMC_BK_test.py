@@ -1,15 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr  9 17:28:31 2020
 
-@author: s1998345
-"""
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Wed Feb 26 17:43:28 2020
-@author: s1998345
+@author: Gong Xue
 """
 import pylab 
 import time

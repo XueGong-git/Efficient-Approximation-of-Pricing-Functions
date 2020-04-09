@@ -1,3 +1,3 @@
 - This folder contain all the code for the performance testing of multilevel Monte Carlo for simulation of the Black-karasinski model.
-- The main function is defined as 'mlmc', which calls the function 'mlmc_l' at each level $l$
-- Then test is performed on a set of parameters and the codes generate Figure $2.1$-$2.3$ in the report 
+- The main function is defined as 'mlmc', which calls the function 'mlmc_l' at each level l
+- Then test is performed on a set of parameters and the codes generate Figure 2.1-2.3 in the report 

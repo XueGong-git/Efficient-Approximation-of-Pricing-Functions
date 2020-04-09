@@ -199,7 +199,7 @@ for extrap in range(1):
         std_cost[i,extrap] = np.sum((2*var1[0:l]/eps**2)*M**(np.arange(l)+L0))
 
         
-#plot complexity
+#plot complexity vs. eps
 eps2=np.multiply(Eps,Eps)
 print(mlmc_cost[:, 0]*eps2)
 print(std_cost[:, 0]*eps2)
@@ -211,7 +211,7 @@ pylab.ylabel('Cost'); #title(stitle)
 pylab.legend()
 
 
-
+# plot variance vs. level l
 line1 = pylab.plot(L[1:]+2,np.log(var1[1:])/np.log(M), 'k*--', label = '$\hat{P}_l$')
 line2 = pylab.plot(L[1:]+2,np.log(var2[1:])/np.log(M), 'b*-', label = '$\hat{P}_l- \hat{P}_{l-1}$')
 line3 = pylab.plot(L[1:]+2,-2*(L[1:]+2)-4, 'r:', label = 'slope $=-2$')
@@ -220,7 +220,7 @@ pylab.ylabel('$log_M$ Variance'); #title(stitle)
 pylab.legend()
 
 
-
+# plot  mean vs. level l
 line1 = pylab.plot(L[1:]+2,np.log(abs(del1[1:]))/np.log(M), 'k*--',label = '$\hat{P}_l$')
 line2 = pylab.plot(L[1:]+2,np.log(abs(del2[1:]))/np.log(M),'b*-', label = '$\hat{P}_l- \hat{P}_{l-1}$')
 #line3 = pylab.plot(L[2:],np.log(abs(del2[2:]-del2[1:(maxl-1)]/M))/np.log(M), 'r--',label = 'Y_l-Y_{l-1}/M')

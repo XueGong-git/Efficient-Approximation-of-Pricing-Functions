@@ -150,6 +150,8 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0, L0):
 
     return(P, Nl, cost)
 
+#test1 = mlmc_l(M=4, l =0, N = 10000, alpha=0.9, mu=[0.01,0.25,0.05], T=5, sigma=0.9, r0=0.01, L0=0)
+#test2 = mc(M=4,eps=0.0001, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
 
 
 
@@ -198,17 +200,11 @@ for extrap in range(1):
 
         std_cost[i,extrap] = np.sum((2*var1[0:l]/eps**2)*M**(np.arange(l)+L0))
 
-        
-#plot complexity vs. eps
-eps2=np.multiply(Eps,Eps)
-line1= pylab.loglog(Eps,mlmc_cost[:, 0]*eps2, 'k*--', label = 'MLMC')
-line2= pylab.loglog(Eps,std_cost[:,0]*eps2, 'b*-', label = 'MC')
-line3 = plt.loglog(Eps,mlmc_cost[:, 0]*eps2, label = 'MLMC')
-pylab.xlabel('eps')
-pylab.ylabel('eps2*Cost'); #title(stitle)
-pylab.legend()
 
-# plot variance vs. level l
+
+
+#plot mean
+plt.figure()
 line1 = pylab.plot(L[1:]+2,np.log(var1[1:])/np.log(M), 'k*--', label = '$\hat{P}_l$')
 line2 = pylab.plot(L[1:]+2,np.log(var2[1:])/np.log(M), 'b*-', label = '$\hat{P}_l- \hat{P}_{l-1}$')
 line3 = pylab.plot(L[1:]+2,-2*(L[1:]+2)-4, 'r:', label = 'slope $=-2$')
@@ -217,11 +213,21 @@ pylab.ylabel('$log_M$ Variance'); #title(stitle)
 pylab.legend()
 
 
-# plot  mean vs. level l
+#plot variance
+plt.figure()
 line1 = pylab.plot(L[1:]+2,np.log(abs(del1[1:]))/np.log(M), 'k*--',label = '$\hat{P}_l$')
 line2 = pylab.plot(L[1:]+2,np.log(abs(del2[1:]))/np.log(M),'b*-', label = '$\hat{P}_l- \hat{P}_{l-1}$')
-#line3 = pylab.plot(L[2:],np.log(abs(del2[2:]-del2[1:(maxl-1)]/M))/np.log(M), 'r--',label = 'Y_l-Y_{l-1}/M')
-line4 = pylab.plot(L[1:]+2,-1*(L[1:]+2)-0.8, 'r:', label = 'slope $= -1$')
+line3 = pylab.plot(L[1:]+2,-1*(L[1:]+2)-0.8, 'r:', label = 'slope $= -1$')
 pylab.xlabel('$l$')
 pylab.ylabel('$log_M |Mean|$'); 
+pylab.legend()
+
+
+#plot complexity
+plt.figure()
+eps2=np.multiply(Eps,Eps)
+line1= pylab.loglog(Eps,mlmc_cost[:, 0]*eps2, 'k*--', label = 'MLMC')
+line2= pylab.loglog(Eps,std_cost[:,0]*eps2, 'b*-', label = 'MC')
+pylab.xlabel('$\epsilon$')
+pylab.ylabel('$\epsilon^2$Cost'); #title(stitle)
 pylab.legend()

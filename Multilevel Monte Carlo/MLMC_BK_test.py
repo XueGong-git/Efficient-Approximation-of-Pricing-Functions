@@ -23,7 +23,7 @@ def Mu(t,T,mu):
     return cs(t)
 
 
-#  mlmc_l = function for level l estimator 
+#  mlmc_l - function for level l estimator 
 def mlmc_l(M,l,N, alpha, mu, T, sigma, r0, L0):
     nf = M**(l+L0)
     nc = nf/M
@@ -61,8 +61,7 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0, L0):
                 lnrc = lnrc + alpha*(math.log(Mu(t,T, mu))-lnrc)*hc + sigma*dWc
                 rc = np.exp(lnrc)
                 integralc = integralc + rc*hc
-       # Pf=lnrf
-        #Pc=lnrc
+
         Pf = np.exp(-integralf) #price estimation using fine grid
         Pc = np.exp(-integralc) #price estimation using coarse grid
         if l == 0:
@@ -71,8 +70,7 @@ def mlmc_l(M,l,N, alpha, mu, T, sigma, r0, L0):
         sums[1] = sums[1] + sum((Pf-Pc)**2)
         sums[2] = sums[2] + sum(Pf)
         sums[3] = sums[3] + sum(Pf**2)
-        #print(np.var(Pf))
-        #print(np.var(Pf-Pc))
+
     return(sums)
     
     
@@ -83,14 +81,7 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0, L0):
 
 
 
-    #M=4
-    #eps=0.005
-    #extrap=1
-    #alpha=3
-    #mu=[0.01,0.25,0.05]
-    #T=10
-    #sigma=0.9
-    #r0=0.01
+
 
     L   = -1
     N   = 10000
@@ -106,7 +97,6 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0, L0):
         # optimal sample sizes
     
         Vl = suml[2,np.arange(L+1)]/suml[0,np.arange(L+1)] - (suml[1,np.arange(L+1)]/suml[0,np.arange(L+1)])**2
-        #Nl = ceil( 2 * Nl * sum(Vl./Nl) / eps^2);
         Nl = np.ceil(2*np.sqrt(Vl/(M**np.arange(L+1))) * np.sum(np.sqrt(Vl*(M**np.arange(L+1)))) / eps**2)
 
     
@@ -149,9 +139,6 @@ def mlmc(M,eps,extrap, alpha, mu, T, sigma, r0, L0):
 
 
     return(P, Nl, cost)
-
-#test1 = mlmc_l(M=4, l =0, N = 10000, alpha=0.9, mu=[0.01,0.25,0.05], T=5, sigma=0.9, r0=0.01, L0=0)
-#test2 = mc(M=4,eps=0.0001, alpha=1.9871, mu=[1.30048,1.1365,1.26824], T=5.45182, sigma=0.699227, r0=1.34589)
 
 
 
